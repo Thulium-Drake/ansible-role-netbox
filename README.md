@@ -6,4 +6,4 @@ This role provides a means to install Netbox. It makes a few assumptions on the 
 - The system can access Github to download the desired version
 - All media, reports and scripts are stored on the local machine
 
-Check [defaults/main.yml](the default file) for all configurable options
+Check [the defaults file](defaults/main.yml) for all configurable options
