@@ -1,0 +1,42 @@
+---
+# Netbox version to install
+netbox_version: '3.3.0'
+# Database settings
+netbox_database_host: 'localhost'
+netbox_database_name: 'netbox'
+netbox_database_user: 'netbox'
+netbox_database_password: 'AllYourIPsAreBelongToUs!'
+
+# Secret key used to generate random numbers and strings
+netbox_secret_key: 'SuperSecretNumbersForYall!'
+
+# Users that will manage this instance of Netbox
+netbox_admins:
+  - name: 'John Doe'
+    username: 'jdoe'
+    email: 'jdoe@example.com'
+
+# Timezone for the application
+netbox_timezone: 'UTC'
+
+# SMTP settings
+netbox_smtp_from_addr: 'netbox@example.com'
+netbox_smtp_server: 'localhost'
+netbox_smtp_port: 25
+netbox_smtp_user: ''
+netbox_smtp_password: ''
+netbox_smtp_use_ssl: false
+netbox_smtp_use_tls: false
+
+# Exempt view permissions
+netbox_exempt_view_permissions: []
+
+netbox_http_proxy_enabled: false
+netbox_http_proxy: 'http://proxy.example.com:8080'
+
+# Set to true to enable server debugging.
+# WARNING: Debugging introduces a substantial performance penalty and may reveal
+# sensitive information about your installation.
+# Only enable debugging while performing testing.
+# Never enable debugging on a production system.
+netbox_debugging: false

@@ -1,0 +1,10 @@
+---
+- name: 'restart netbox'
+  ansible.builtin.service:
+    name: "{{ service }}"
+    state: 'restarted'
+  loop:
+    - 'netbox'
+    - 'netbox-rq'
+  loop_control:
+    loop_var: 'service'

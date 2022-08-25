@@ -1,0 +1,114 @@
+###
+# {{ ansible_managed }}
+###
+ALLOWED_HOSTS = ["{{ ansible_facts['fqdn'] }}"]
+
+DATABASE = {
+    'NAME': '{{ netbox_database_name }}',
+    'USER': '{{ netbox_database_user }}',
+    'PASSWORD': '{{ netbox_database_password }}',
+    'HOST': '{{ netbox_database_host }}',
+    'PORT': '',
+    'CONN_MAX_AGE': 300,
+}
+
+REDIS = {
+    'tasks': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'PASSWORD': '',
+        'DATABASE': 0,
+        'SSL': False,
+    },
+    'caching': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'PASSWORD': '',
+        'DATABASE': 1,
+        'SSL': False,
+    }
+}
+
+SECRET_KEY = '{{ netbox_secret_key }}'
+
+ADMINS = [
+{% for admin in netbox_admins %}
+  ("{{ admin['name'] }}", "{{ admin['email'] }}" ),
+{% endfor %}
+]
+
+BASE_PATH = ''
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = [
+    "https://{{ ansible_facts['fqdn'] }}",
+]
+
+DEBUG = {{ netbox_debugging | bool }}
+
+# Email settings
+EMAIL = {
+    'SERVER': '{{ netbox_smtp_server }}',
+    'PORT': {{ netbox_smtp_port }},
+    'USERNAME': '{{ netbox_smtp_user }}',
+    'PASSWORD': '{{ netbox_smtp_password }}',
+    'USE_SSL': {{ netbox_smtp_use_ssl | bool }},
+    'USE_TLS': {{ netbox_smtp_use_tls | bool }},
+    'TIMEOUT': 10,  # seconds
+    'FROM_EMAIL': '{{ netbox_smtp_from_addr }}',
+}
+
+EXEMPT_VIEW_PERMISSIONS = [
+{% for permission in netbox_exempt_view_permissions %}
+  '{{ permission }}',
+{% endfor %}
+]
+
+{% if netbox_http_proxy_enabled %}
+HTTP_PROXIES = {
+    'http': '{{ netbox_http_proxy }}',
+    'https': '{{ netbox_http_proxy }}',
+}
+{% endif %}
+
+INTERNAL_IPS = ('127.0.0.1', '::1')
+
+LOGGING = {}
+LOGIN_PERSISTENCE = False
+LOGIN_REQUIRED = False
+LOGIN_TIMEOUT = None
+MEDIA_ROOT = '/opt/netbox-data/media'
+REPORTS_ROOT = '/opt/netbox-data/reports'
+SCRIPTS_ROOT = '/opt/netbox-data/scripts'
+METRICS_ENABLED = False
+PLUGINS = []
+
+REMOTE_AUTH_ENABLED = True
+REMOTE_AUTH_BACKEND = 'netbox.authentication.RemoteUserBackend'
+REMOTE_AUTH_HEADER = 'HTTP_X_REMOTE_USER'
+REMOTE_AUTH_AUTO_CREATE_USER = True
+REMOTE_AUTH_DEFAULT_GROUPS = []
+REMOTE_AUTH_DEFAULT_PERMISSIONS = {}
+REMOTE_AUTH_SUPERUSERS = [
+{% for admin in netbox_admins %}
+  "{{ admin['username'] }}",
+{% endfor %}
+]
+
+RELEASE_CHECK_URL = None
+RQ_DEFAULT_TIMEOUT = 300
+
+CSRF_COOKIE_NAME = 'csrftoken'
+
+SESSION_COOKIE_NAME = 'sessionid'
+
+SESSION_FILE_PATH = None
+
+TIME_ZONE = '{{ netbox_timezone }}'
+
+DATE_FORMAT = 'N j, Y'
+SHORT_DATE_FORMAT = 'Y-m-d'
+TIME_FORMAT = 'g:i a'
+SHORT_TIME_FORMAT = 'H:i:s'
+DATETIME_FORMAT = 'N j, Y g:i a'
+SHORT_DATETIME_FORMAT = 'Y-m-d H:i'
