@@ -58,12 +58,6 @@ EMAIL = {
     'FROM_EMAIL': '{{ netbox_smtp_from_addr }}',
 }
 
-EXEMPT_VIEW_PERMISSIONS = [
-{% for permission in netbox_exempt_view_permissions %}
-  '{{ permission }}',
-{% endfor %}
-]
-
 {% if netbox_http_proxy_enabled %}
 HTTP_PROXIES = {
     'http': '{{ netbox_http_proxy }}',
@@ -73,6 +67,23 @@ HTTP_PROXIES = {
 
 INTERNAL_IPS = ('127.0.0.1', '::1')
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': '/opt/netbox-data/netbox.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'INFO',
+        },
+    },
+}
 LOGGING = {}
 LOGIN_PERSISTENCE = False
 LOGIN_REQUIRED = False
@@ -87,8 +98,6 @@ REMOTE_AUTH_ENABLED = True
 REMOTE_AUTH_BACKEND = 'netbox.authentication.RemoteUserBackend'
 REMOTE_AUTH_HEADER = 'HTTP_X_REMOTE_USER'
 REMOTE_AUTH_AUTO_CREATE_USER = True
-REMOTE_AUTH_DEFAULT_GROUPS = []
-REMOTE_AUTH_DEFAULT_PERMISSIONS = {}
 REMOTE_AUTH_SUPERUSERS = [
 {% for admin in netbox_admins %}
   "{{ admin['username'] }}",

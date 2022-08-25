@@ -28,9 +28,6 @@ netbox_smtp_password: ''
 netbox_smtp_use_ssl: false
 netbox_smtp_use_tls: false
 
-# Exempt view permissions
-netbox_exempt_view_permissions: []
-
 netbox_http_proxy_enabled: false
 netbox_http_proxy: 'http://proxy.example.com:8080'
 
