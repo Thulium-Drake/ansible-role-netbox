@@ -84,7 +84,6 @@ LOGGING = {
         },
     },
 }
-LOGGING = {}
 LOGIN_PERSISTENCE = False
 LOGIN_REQUIRED = False
 LOGIN_TIMEOUT = None
@@ -98,6 +97,12 @@ REMOTE_AUTH_ENABLED = True
 REMOTE_AUTH_BACKEND = 'netbox.authentication.RemoteUserBackend'
 REMOTE_AUTH_HEADER = 'HTTP_X_REMOTE_USER'
 REMOTE_AUTH_AUTO_CREATE_USER = True
+REMOTE_AUTH_GROUP_SYNC_ENABLED = True
+REMOTE_AUTH_STAFF_USERS = [
+{% for admin in netbox_admins %}
+  "{{ admin['username'] }}",
+{% endfor %}
+]
 REMOTE_AUTH_SUPERUSERS = [
 {% for admin in netbox_admins %}
   "{{ admin['username'] }}",
