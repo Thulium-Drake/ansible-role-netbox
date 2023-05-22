@@ -31,7 +31,7 @@
     state: 'directory'
     owner: 'netbox'
     group: 'netbox'
-    mode: 0750
+    mode: '0750'
   loop:
     - '/opt/netbox-data/media'
     - '/opt/netbox-data/reports'
@@ -45,8 +45,8 @@
     dest: '/opt/netbox-data/configuration.py'
     owner: 'netbox'
     group: 'netbox'
-    mode: 0600
-  notify: 'restart netbox'
+    mode: '0600'
+  notify: 'Restart netbox'
 
 - name: 'Ensure NetBox sources'
   ansible.builtin.unarchive:
@@ -55,7 +55,7 @@
     remote_src: true
     creates: "/opt/netbox-{{ netbox_version }}"
   register: netbox_sources_updated
-  notify: 'restart netbox'
+  notify: 'Restart netbox'
 
 - name: 'Remove default directories'  # noqa no-handler
   ansible.builtin.file:
@@ -97,7 +97,7 @@
   environment:
     PYTHON: '/usr/bin/python3.8'
   when: netbox_sources_updated['changed']
-  notify: 'restart netbox'
+  notify: 'Restart netbox'
   changed_when: true
 
 - name: 'Ensure Netbox service files'
@@ -106,7 +106,7 @@
     dest: "/etc/systemd/system/{{ service }}.service"
     owner: 'root'
     group: 'root'
-    mode: 0644
+    mode: '0644'
     remote_src: true
   loop:
     - 'netbox'

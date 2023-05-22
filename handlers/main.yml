@@ -1,5 +1,5 @@
 ---
-- name: 'restart netbox'
+- name: 'Restart netbox'
   ansible.builtin.service:
     name: "{{ service }}"
     state: 'restarted'
