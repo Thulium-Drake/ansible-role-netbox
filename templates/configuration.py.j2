@@ -1,7 +1,10 @@
 ###
 # {{ ansible_managed }}
 ###
-ALLOWED_HOSTS = ["{{ ansible_facts['fqdn'] }}"]
+ALLOWED_HOSTS = [
+    "{{ ansible_facts['fqdn'] }}",
+    "localhost"
+]
 
 DATABASE = {
     'NAME': '{{ netbox_database_name }}',
